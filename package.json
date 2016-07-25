@@ -1,0 +1,28 @@
+{
+  "name": "hubot.js",
+  "version": "1.0.0",
+  "description": "A small robot written in Javascript (He does not like coffeescript)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robsonbittencourt/hubot.js.git"
+  },
+  "keywords": [
+    "hubot",
+    "slack",
+    "docker",
+    "jenkins"
+  ],
+  "author": "robsonbittencourt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robsonbittencourt/hubot.js/issues"
+  },
+  "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
+  "dependencies": {
+    "slackbots": "^0.5.1"
+  }
+}
