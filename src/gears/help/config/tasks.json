@@ -1,0 +1,6 @@
+[
+   {
+      "handler": "help",
+      "trigger": "hubot help"
+   }
+]

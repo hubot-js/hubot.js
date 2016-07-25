@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
   "dependencies": {
-    "slackbots": "^0.5.1"
+    "slackbots": "^0.5.1",
+    "jenkins": "^0.17.0",
+    "winston": "^2.2.0",
+    "string": "^3.3.1"
   }
 }

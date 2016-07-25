@@ -1,0 +1,13 @@
+[
+   {
+      "handler": "job-start",
+      "trigger": "hubot deploy",
+      "category": "jenkins",
+      "description": "A simple deploy",
+      "options": {
+        "jobName": "simple-deploy",
+        "message": "<!channel|channel> Alright. I'll start deploy"
+      }
+   }
+
+]
