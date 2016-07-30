@@ -25,8 +25,8 @@ class Trigger {
    }
 
    acceptWithParams(message, phrase) {
+      var count = this.countParams(phrase);
       var params = this.getParams(message, phrase);
-      var count = (phrase.match(new RegExp('\\' + this.placeholder,'g')) || []).length;
       return { ok: params.length === count, params: params }
    }
 
@@ -36,6 +36,10 @@ class Trigger {
 
    normalize(text) {
       return stringfy(text).trim().latinise().s.toLowerCase();
+   }
+
+   countParams(phrase) {
+      return phrase.match(new RegExp('\\' + this.placeholder, 'g')).length;
    }
 
    getParams(message, phrase) {
