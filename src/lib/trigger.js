@@ -5,7 +5,7 @@ exports.check = check;
 var stringfy = require('string');
 
 function check(message, trigger) {
-   return new Trigger('$').accept(message, trigger);
+   return new Trigger('$').with(normalize(trigger)).accept(normalize(message));
 }
 
 class Trigger {
@@ -13,38 +13,52 @@ class Trigger {
       this.placeholder = placeholder;
    }
 
-   accept(message, phrase) {
-      message = this.normalize(message);
-      phrase = this.normalize(phrase);
-
-      if (!phrase.startsWith(this.placeholder) && phrase.indexOf(this.placeholder) > 0) {
-         return this.acceptWithParams(message, phrase);
-      }
-
-      return this.acceptWithoutParams(message, phrase);
+   with(trigger) {
+      this.trigger = trigger;
+      this.params = new TriggerParams(this.trigger, this.placeholder);
+      return this;
    }
 
-   acceptWithParams(message, phrase) {
-      var count = this.countParams(phrase);
-      var params = this.getParams(message, phrase);
+   accept(message) {
+      if (this.params.has()) {
+         return this.acceptWithParams(message);
+      }
+
+      return this.acceptWithoutParams(message);
+   }
+
+   acceptWithParams(message) {
+      var count = this.params.count();
+      var params = this.params.capture(message);
       return { ok: params.length === count, params: params }
    }
 
-   acceptWithoutParams(message, phrase) {
-      return { ok: message == phrase };
+   acceptWithoutParams(message) {
+      return { ok: this.trigger === message, params: [] };
+   }
+}
+
+class TriggerParams {
+   constructor(trigger, placeholder) {
+      this.trigger = trigger;
+      this.placeholder = placeholder;
    }
 
-   normalize(text) {
-      return stringfy(text).trim().latinise().s.toLowerCase();
+   has() {
+      return this.trigger.includes(this.placeholder) && !this.trigger.startsWith(this.placeholder);
    }
 
-   countParams(phrase) {
-      return phrase.match(new RegExp('\\' + this.placeholder, 'g')).length;
+   count() {
+      return this.trigger.match(new RegExp('\\' + this.placeholder, 'g')).length;
    }
 
-   getParams(message, phrase) {
+   capture(message) {
       // get $ to $  >  ['get ', ' to ']
-      var triggerParts = phrase.split(this.placeholder).filter(s => s);
+      var triggerParts = this.trigger.split(this.placeholder).filter(s => s);
+
+      if (triggerParts.length == 1) {
+         return [message.replace(triggerParts[0], '')];
+      }
       
       // get alpha to beta  >  'alpha$beta'
       triggerParts.reduce((previous, next) => { 
@@ -55,4 +69,8 @@ class Trigger {
       // 'alpha$beta'  >  ['alpha', 'beta']
       return message.split(this.placeholder).filter(s => s);
    }
+}
+
+function normalize(text) {
+   return stringfy(text).trim().latinise().s.toLowerCase();
 }
