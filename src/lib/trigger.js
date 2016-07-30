@@ -56,6 +56,12 @@ class TriggerParams {
       // get $ to $  >  ['get ', ' to ']
       var triggerParts = this.trigger.split(this.placeholder).filter(s => s);
 
+      // message must includes all trigger parts
+      if (triggerParts.find(t => !message.includes(t))) {
+         return [];
+      }
+
+      // reduce works only for array with more than one item
       if (triggerParts.length == 1) {
          return [message.replace(triggerParts[0], '')];
       }
