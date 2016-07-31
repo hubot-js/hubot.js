@@ -4,7 +4,7 @@
   "description": "A small robot written in Javascript (He does not like coffeescript)",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -23,9 +23,11 @@
   },
   "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
   "dependencies": {
-    "slackbots": "^0.5.1",
+    "chai": "^3.5.0",
     "jenkins": "^0.17.0",
-    "winston": "^2.2.0",
-    "string": "^3.3.1"
+    "mocha": "^2.5.3",
+    "slackbots": "^0.5.1",
+    "string": "^3.3.1",
+    "winston": "^2.2.0"
   }
 }
