@@ -53,26 +53,16 @@ class TriggerParams {
    }
 
    capture(message) {
-      // get $ to $  >  ['get ', ' to ']
+      // trigger: 'get $ to $'  >  ['get ', ' to ']
       var triggerParts = this.trigger.split(this.placeholder).filter(s => s);
 
       // message must includes all trigger parts
-      if (triggerParts.find(t => !message.includes(t))) {
-         return [];
-      }
-
-      // reduce works only for array with more than one item
-      if (triggerParts.length == 1) {
-         return [message.replace(triggerParts[0], '')];
-      }
+      if (triggerParts.find(t => !message.includes(t))) return [];
       
-      // get alpha to beta  >  'alpha$beta'
-      triggerParts.reduce((previous, next) => { 
-         message = message.replace(previous, this.placeholder);
-         message = message.replace(next, this.placeholder);
-      });
+      // message: 'get alpha to beta'  >  'alpha$beta'
+      triggerParts.forEach(trigger => message = message.replace(trigger, this.placeholder));
 
-      // 'alpha$beta'  >  ['alpha', 'beta']
+      // message: 'alpha$beta'  >  ['alpha', 'beta']
       return message.split(this.placeholder).filter(s => s);
    }
 }
