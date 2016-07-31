@@ -30,7 +30,8 @@ class Trigger {
    acceptWithParams(message) {
       var count = this.params.count();
       var params = this.params.capture(message);
-      return { ok: params.length === count, params: params }
+      var matches = params.length === count;
+      return { ok: matches, params: matches ? params : [] }
    }
 
    acceptWithoutParams(message) {
