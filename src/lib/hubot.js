@@ -3,7 +3,7 @@
 var util = require('util');
 var Bot = require('slackbots');
 var log = require(__base + 'src/lib/log');
-var assembler = require(__base + 'src/lib/assembler');
+var Assembler = require(__base + 'src/lib/assembler');
 var messageHandler = require(__base + 'src/lib/message-handler');
 
 process.on('uncaughtException', function (exception) {
@@ -29,7 +29,7 @@ Hubot.prototype.run = function () {
 
 Hubot.prototype._onStart = function () {
    this._loadBotUser();
-   this.core = assembler.build();
+   this.core = new Assembler().build();
 };
 
 Hubot.prototype._onMessage = function (message) {
