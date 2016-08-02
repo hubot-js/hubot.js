@@ -1,12 +1,11 @@
 [
    {
       "handler": "job-start",
-      "trigger": "hubot deploy",
+      "trigger": "hubot start job $",
       "category": "jenkins",
-      "description": "A simple deploy",
+      "description": "To start a job use the command next to replacing $ by job name.",
       "options": {
-        "jobName": "simple-deploy",
-        "message": "<!channel|channel> Alright. I'll start deploy"
+        "message": "<!channel|channel> Alright. I'll start the job"
       }
    }
 

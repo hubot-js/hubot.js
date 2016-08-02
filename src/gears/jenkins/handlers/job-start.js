@@ -5,26 +5,24 @@ exports.process = process;
 var jenkins = require(__base + 'src/lib/jenkins');
 var log = require(__base + 'src/lib/log');
 
-function process(message, hubot, task) {
-   start(message, hubot, task);
+function process(message, hubot, task, params) {
+   start(message, hubot, task, params[0]);
 }
 
-function start(message, hubot, task) {
-   jenkins.callJob(task.options.jobName).then(function() {
-      hubot.postMessage(getRecipient(hubot, message), task.options.message, {as_user: true});  
+function start(message, hubot, task, job) {
+   var recipient = getRecipient(hubot, message);
+
+   jenkins.callJob(job).then(function() {
+      hubot.postMessage(recipient, task.options.message, {as_user: true});  
    }, function(error) {
-      log.detailedError('Error on call Jenkins', error);
-      hubot.postMessage(getRecipient(hubot, message), 'Could not start the job. See the error in the logs.', {as_user: true});
+      if (error.notFound) {
+         hubot.postMessage(recipient, `Sorry I could not find the job *${job}*`, {as_user: true});
+      } else {
+         log.detailedError('Error on call Jenkins', error);
+         hubot.postMessage(recipient, 'Sorry I could not start the job *${job}*. See the error in the logs.', {as_user: true});
+      }
    });
 };
-
-function sucessMessage(hubot, message) {
-   hubot.postMessage(getRecipient(hubot, message), task.options.message, {as_user: true});
-}
-
-function errorMessage(hubot, message, error) {
-   hubot.postMessage(getRecipient(hubot, message), 'Sorry could not start the job. See the error in the logs.', {as_user: true});
-}
 
 function getRecipient(hubot, message) {
    if (hubot._isPrivateConversation(message)) {
