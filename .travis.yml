@@ -1,4 +1,16 @@
+sudo: required
+
 language: node_js
 node_js:
   - "5.11"
+
+services:
+  - docker
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" ;
+    docker build -t robsonbittencourt/hubot.js:latest . ;
+    docker push docker.io/robsonbittencourt/hubot.js:latest ;
+    fi  
 
