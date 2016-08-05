@@ -8,8 +8,9 @@ services:
   - docker
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+  if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     docker build -t hubot .
     docker push robsonbittencourt/hubot.js;
-    fi
+  fi
+
