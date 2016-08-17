@@ -9,7 +9,7 @@ function callTasks(message, hubot) {
       var acceptance = trigger.check(message.text, task.trigger);
       if (acceptance.ok) {
          var handler = getHandler(hubot, task);
-         handler.process(message, hubot, task, acceptance.params);
+         handler.handle(hubot, message, task, acceptance.params);
       }
    });
 }

@@ -1,8 +1,0 @@
-[
-   {
-      "key": "jenkins",
-      "name": "Jenkins Jobs",
-      "description": "To use Jenkins jobs use the following commands:",
-      "visible": true
-   }
-]

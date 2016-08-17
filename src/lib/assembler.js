@@ -1,8 +1,10 @@
 'use strict';
 
+var fs = require('fs');
 var log = require(__base + 'src/lib/log');
 var speech = require(__base + 'src/lib/speech');
-var gears = require(__base + 'config/gears.json');
+
+const gearNamePrefix = 'gear-';
 
 module.exports = class Assembler {
 
@@ -15,13 +17,19 @@ module.exports = class Assembler {
    }
 
    build() {
-      this.loadGears(); 
+      this.loadGears(this); 
       return this.core;
    }
 
-   loadGears() {
-      gears.forEach((gear, index) => this.loadGear(gears, gear, index));
-   }
+   loadGears(self) {
+      fs.readdir(__nodeModules, function (error, list) {
+         var gears = list.filter(function (e) {
+            return e.startsWith(gearNamePrefix);
+         });
+
+         gears.forEach((gear, index) => self.loadGear(gears, gear, index));
+      });
+   };
 
    loadGear(gears, gear, index) {
       logAddingGear(gears, gear, index);
@@ -51,25 +59,25 @@ module.exports = class Assembler {
       self.core.tasks.forEach(function(task) {
          if (!self.containsHandler(task.handler)) {
             var handler = require(self.handlersPath(gear, task.handler));
-            self.core.handlers.push({ key: task.handler, process: handler.process});
+            self.core.handlers.push({ key: task.handler, handle: handler.handle});
          }
       });
    }
 
-   containsHandler(handlerKey) {
-      return this.core.handlers.find(h => h.key === handlerKey) != null;
+   containsHandler(handler) {
+      return this.core.handlers.find(h => h.key === handler) != null;
    }
    
    tasksPath(gear) {
-      return __gears + gear.key + '/config/tasks.json';
+      return __nodeModules + gear + '/config/tasks.json';
    }
 
    categoriesPath(gear) {
-      return __gears + gear.key + '/config/categories.json';
+      return __nodeModules + gear + '/config/categories.json';
    }
 
    handlersPath(gear, handler) {
-      return __gears + gear.key + '/handlers/' + handler;
+      return __nodeModules + gear + '/src/handlers/' + handler;
    }
 }
 
@@ -80,7 +88,7 @@ function logStartAssembling() {
 function logAddingGear(gears, gear, index) {
    if (!gears) return log.error('Could not load gears.');
    if (!gear) return log.error('Could not load gear at index ' + index);
-   log.info(speech.start('Adding gear ').refer(gear.key).progress(index + 1, gears.length).end());
+   log.info(speech.start('Adding ').refer(gear).progress(index + 1, gears.length).end());
 }
 
 function logInfoLoadingGear(gear) {

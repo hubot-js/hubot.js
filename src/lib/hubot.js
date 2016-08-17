@@ -5,6 +5,7 @@ var Bot = require('slackbots');
 var log = require(__base + 'src/lib/log');
 var Assembler = require(__base + 'src/lib/assembler');
 var messageHandler = require(__base + 'src/lib/message-handler');
+var speech = require(__base + 'src/lib/speech');
 
 process.on('uncaughtException', function (exception) {
   log.error(exception);
@@ -65,3 +66,15 @@ Hubot.prototype._isPrivateConversation = function (message) {
 Hubot.prototype._isFromHubot = function (message) {
    return message.user === this.user.id;
 };
+
+Hubot.prototype.speech = function (message) {
+   return speech.start(message);
+}
+
+Hubot.prototype.getRecipient = function (message) {
+   if (this._isPrivateConversation(message)) {
+      return message.user;
+   } else {
+      return message.channel;
+   }
+}

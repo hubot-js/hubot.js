@@ -5,18 +5,18 @@ var Assembler = require('../../src/lib/assembler');
 describe('Hubot Assembler', function() {
    describe('Hubot Assembler - Getting Paths', function() {
       it('should provide correct path for tasks', function() {
-         var path = getAssembler().tasksPath({ key: 'test' });
-         expect(path).to.equal(__gears + 'test/config/tasks.json');
+         var path = getAssembler().tasksPath('test');
+         expect(path).to.equal(__nodeModules + 'test/config/tasks.json');
       });
 
       it('should provide correct path for categories', function() {
-         var path = getAssembler().categoriesPath({ key: 'test' });
-         expect(path).to.equal(__gears + 'test/config/categories.json');
+         var path = getAssembler().categoriesPath('test');
+         expect(path).to.equal(__nodeModules + 'test/config/categories.json');
       });
 
       it('should provide correct path for handlers', function() {
-         var path = getAssembler().handlersPath({ key: 'test' }, 'test-handler');
-         expect(path).to.equal(__gears + 'test/handlers/test-handler');
+         var path = getAssembler().handlersPath('test', 'test-handler');
+         expect(path).to.equal(__nodeModules + 'test/src/handlers/test-handler');
       });
    });
 
@@ -37,7 +37,7 @@ describe('Hubot Assembler', function() {
    describe('Hubot Assembler - Loader', function() {
       it('should load task file correctly', function() {
          var assembler = getAssembler();
-         assembler.loadTasks({ key: 'test' }, assembler);
+         assembler.loadTasks('gear-test', assembler);
          expect(assembler.core.tasks).to.be.deep.equal([{
             "handler": "test-handler",
             "trigger": "test-trigger"
@@ -46,7 +46,7 @@ describe('Hubot Assembler', function() {
 
       it('should load category file correctly', function() {
          var assembler = getAssembler();
-         assembler.loadCategories({ key: 'test' }, assembler);
+         assembler.loadCategories('gear-test', assembler);
          expect(assembler.core.categories).to.be.deep.equal([{
             "key": "test",
             "name": "test",
@@ -57,16 +57,16 @@ describe('Hubot Assembler', function() {
 
       it('should not load handler file if there is not tasks', function() {
          var assembler = getAssembler();
-         assembler.loadHandlers({ key: 'test' }, assembler);
+         assembler.loadHandlers('gear-test', assembler);
          expect(assembler.core.handlers).to.be.deep.equal([]);
       });
 
       it('should load handler file based on tasks handlers', function() {
          var assembler = getAssembler();
-         assembler.loadTasks({ key: 'test' }, assembler);
-         assembler.loadHandlers({ key: 'test' }, assembler);
+         assembler.loadTasks('gear-test', assembler);
+         assembler.loadHandlers('gear-test', assembler);
          expect(assembler.core.handlers).to.have.lengthOf(1);
-         expect(assembler.core.handlers[0].process().key).to.be.equal('test-process');
+         expect(assembler.core.handlers[0].handle().key).to.be.equal('test-handle');
       });
 
       it('should not throw error loading gears', function() {
@@ -91,7 +91,7 @@ describe('Hubot Assembler', function() {
 
       it('should load a valid gear', function() {
          var assembler = getAssembler();
-         assembler.loadGear([], { key: 'test' }, 0);
+         assembler.loadGear([], 'gear-test', 0);
          expect(assembler.core.tasks).to.be.deep.equal([{
             "handler": "test-handler",
             "trigger": "test-trigger"
