@@ -25,8 +25,8 @@
   "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
   "dependencies": {
     "chai": "^3.5.0",
-    "jenkins": "^0.17.0",
-    "mocha": "^2.5.3",
+    "jenkins": "^0.18.0",
+    "mocha": "^3.0.2",
     "slackbots": "^0.5.1",
     "string": "^3.3.1",
     "winston": "^2.2.0",
