@@ -7,9 +7,16 @@ node_js:
 services:
   - docker
 
+addons:
+    code_climate:
+        repo_token: $CODE_CLIMATE_TOKEN
+
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" ;
     docker build -t robsonbittencourt/hubot.js:latest . ;
     docker push docker.io/robsonbittencourt/hubot.js:latest ;
     fi 
+
+after_script:
+  - codeclimate-test-reporter < lcov.info
