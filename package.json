@@ -4,7 +4,8 @@
   "description": "A small robot written in Javascript (He does not like coffeescript)",
   "main": "app.js",
   "scripts": {
-    "test": "istanbul cover ./node_modules/.bin/_mocha -- --recursive --reporter spec"
+    "test": "istanbul cover _mocha -- --recursive --reporter spec",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,6 @@
     "string": "^3.3.1",
     "winston": "^2.2.0",
     "istanbul": "^0.4.4",
-    "codeclimate-test-reporter": "^0.3.3"
+    "coveralls": "^2.11.12"
   }
 }
