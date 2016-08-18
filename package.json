@@ -29,6 +29,6 @@
     "slackbots": "^0.5.1",
     "string": "^3.3.1",
     "winston": "^2.2.0",
-    "instanbul": "^0.4.4" 
+    "istanbul": "^0.4.4"
   }
 }
