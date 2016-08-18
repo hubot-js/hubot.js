@@ -4,7 +4,7 @@
   "description": "A small robot written in Javascript (He does not like coffeescript)",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --recursive --reporter spec"
+    "test": "istanbul cover ./node_modules/.bin/_mocha -- --recursive --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "mocha": "^2.5.3",
     "slackbots": "^0.5.1",
     "string": "^3.3.1",
-    "winston": "^2.2.0"
+    "winston": "^2.2.0",
+    "instanbul": "^0.4.4" 
   }
 }
