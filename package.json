@@ -24,16 +24,16 @@
    },
    "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
    "dependencies": {
-      "slackbots": "^0.5.1",
+      "slackbots": "^0.5.2",
       "string": "^3.3.1",
       "winston": "^2.2.0",
-      "gear-help": "^1.0.0",
-      "gear-jenkins": "^1.0.0"
+      "gear-help": "^1.0.1",
+      "gear-jenkins": "^1.0.1"
    },
    "devDependencies": {
       "chai": "^3.5.0",
       "mocha": "^3.0.2",
-      "istanbul": "^0.4.4",
+      "istanbul": "^0.4.5",
       "coveralls": "^2.11.12"
    }
 }
