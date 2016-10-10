@@ -3,39 +3,45 @@
 var fs = require('fs');
 var log = require(__base + 'src/lib/log');
 var speech = require(__base + 'src/lib/speech');
+var db = new (require(__base + 'src/lib/db'));
 
 const gearNamePrefix = 'gear-';
 
 module.exports = class Assembler {
 
    constructor() {
-      this.core = {
-         tasks: [],
-         categories: [],
-         handlers: []
-      };
+      this.gears = [];
    }
 
    build() {
       this.loadGears(this); 
-      return this.core;
+      return this.gears;
    }
 
    loadGears(self) {
       fs.readdir(__nodeModules, function (error, list) {
-         var gears = list.filter(function (e) {
+         var gearsNames = list.filter(function (e) {
             return e.startsWith(gearNamePrefix);
          });
 
-         gears.forEach((gear, index) => self.loadGear(gears, gear, index));
+         gearsNames.forEach(function(gearName) {
+            var gearDescription = gearName.replace("gear-", "");
+            
+            self.gears.push( { name: gearName, description: gearDescription } );
+         });   
+            
+         self.gears.forEach((gear, index) => self.loadGear(self.gears, gear, index));
       });
-   };
+   }
 
    loadGear(gears, gear, index) {
       logAddingGear(gears, gear, index);
+      this.tryToLoad('gearStatus', gear, this.loadGearStatus);
+      this.tryToLoad('configs', gear, this.loadConfigs);
       this.tryToLoad('tasks', gear, this.loadTasks);
       this.tryToLoad('categories', gear, this.loadCategories);
       this.tryToLoad('handlers', gear, this.loadHandlers);
+      this.tryToLoad('configHandler', gear, this.loadConfigHandler);
    }
 
    tryToLoad(type, gear, assemble) {
@@ -47,38 +53,66 @@ module.exports = class Assembler {
       }
    }
 
-   loadTasks(gear, self) {
-      self.core.tasks = self.core.tasks.concat(require(self.tasksPath(gear)));
-   }
-
-   loadCategories(gear, self) {
-      self.core.categories = self.core.categories.concat(require(self.categoriesPath(gear)));
-   }
-
-   loadHandlers(gear, self) {
-      self.core.tasks.forEach(function(task) {
-         if (!self.containsHandler(task.handler)) {
-            var handler = require(self.handlersPath(gear, task.handler));
-            self.core.handlers.push({ key: task.handler, handle: handler.handle});
+   loadGearStatus(gear, self) {
+      db.get('SELECT * FROM gears WHERE name = ?', gear.name).then(function(record) {
+         if (!record) {
+            gear.active = false;
+            db.run('INSERT INTO gears(name, description, active) VALUES(?, ?, ?)', [gear.name, gear.description, 'NO']);
+         } else {
+            gear.active = (record.active === 'YES') ? true : false;
          }
       });
    }
 
-   containsHandler(handler) {
-      return this.core.handlers.find(h => h.key === handler) != null;
+   loadConfigs(gear, self) {
+      gear.configs = [];
+      gear.configs = gear.configs.concat(require(self.configsPath(gear)));
    }
-   
+
+   loadTasks(gear, self) {
+      gear.tasks = [];
+      gear.tasks = gear.tasks.concat(require(self.tasksPath(gear)));
+   }
+
+   loadCategories(gear, self) {
+      gear.categories = [];
+      gear.categories = gear.categories.concat(require(self.categoriesPath(gear)));
+   }
+
+   loadHandlers(gear, self) {
+      gear.handlers = [];
+
+      gear.tasks.forEach(function(task) {
+         var handler = require(self.handlersPath(gear, task.handler));
+
+         gear.handlers.push({ key: task.handler, handle: handler.handle});
+      });
+   }
+
+   loadConfigHandler(gear, self) {
+      gear.configHandler = require(self.configsHandlersPath(gear));
+   }
+
+   configsPath(gear) {
+      return __nodeModules + gear.name + '/config/config.json';
+   }
+
    tasksPath(gear) {
-      return __nodeModules + gear + '/config/tasks.json';
+      return __nodeModules + gear.name + '/config/tasks.json';
    }
 
    categoriesPath(gear) {
-      return __nodeModules + gear + '/config/categories.json';
+      return __nodeModules + gear.name + '/config/categories.json';
    }
 
    handlersPath(gear, handler) {
-      return __nodeModules + gear + '/src/handlers/' + handler;
+      return __nodeModules + gear.name + '/src/handlers/' + handler;
    }
+
+   configsHandlersPath(gear) {
+      return __nodeModules + gear.name + '/src/configHandler/configHandler';
+   }
+
 }
 
 function logStartAssembling() {
@@ -88,7 +122,7 @@ function logStartAssembling() {
 function logAddingGear(gears, gear, index) {
    if (!gears) return log.error('Could not load gears.');
    if (!gear) return log.error('Could not load gear at index ' + index);
-   log.info(speech.start('Adding ').refer(gear).progress(index + 1, gears.length).end());
+   log.info(speech.start('Adding ').refer(gear.name).progress(index + 1, gears.length).end());
 }
 
 function logInfoLoadingGear(gear) {
