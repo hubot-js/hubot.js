@@ -4,13 +4,18 @@ global.__base = __dirname + '/';
 global.__gears = __base + 'src/gears/';
 global.__nodeModules = __base + 'node_modules/';
 
-var Hubot = require(__base + 'src/lib/hubot');
-var token = process.env.BOT_API_KEY
-var name = process.env.BOT_NAME || 'hubot';
+const Core = require(__base + 'src/core');
+const db = require(__base + 'src/lib/db');
 
-var hubot = new Hubot({
-   token: token,
-   name: name
+const token = process.env.BOT_API_KEY
+const name = process.env.BOT_NAME || 'hubot';
+
+db.startDb().then(function() {
+   const core = new Core({
+      token: token,
+      name: name
+   });
+
+   core.run();   
 });
 
-hubot.run();
