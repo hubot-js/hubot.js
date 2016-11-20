@@ -10,7 +10,7 @@ function handle(hubot, message, core) {
 
   if (action && isGearChangeStatusMessage(action, hubot, message)) {
     core.isAdminUser(message.user)
-      .then(isAdmin => changeStatus(isAdmin, action, hubot, message));
+        .then(isAdmin => changeStatus(isAdmin, action, hubot, message));
 
     return true;
   }

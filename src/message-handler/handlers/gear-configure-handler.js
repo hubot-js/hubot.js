@@ -4,15 +4,19 @@ const conversation = require('../conversation');
 
 exports.handle = handle;
 
-function handle(hubot, message) {
+function handle(hubot, message, core) {
   if (isGearConfigureMessage(hubot, message)) {
-    const param = {
-      user: message.user,
-      gear: gearDescription(message),
-      interactions: discoverConfig(hubot, message)
-    };
+    core.isAdminUser(message.user).then((isAdmin) => {
+      if (isAdmin) {
+        const param = {
+          user: message.user,
+          gear: gearDescription(message),
+          interactions: discoverConfig(hubot, message)
+        };
 
-    conversation.startConversation(hubot, param, message);
+        conversation.startConversation(hubot, param, message);
+      }
+    });
   }
 }
 
