@@ -56,8 +56,14 @@ function createHelpMessage() {
 }
 
 function start(args) {
-  const argsArray = buildArgsArray(args);
-  const config = { cwd: __dirname, script: 'init-core.js', name: 'hubot', args: argsArray, maxRestarts: 2 };
+  const config = {
+    cwd: __dirname,
+    script: 'init-core.js',
+    name: 'hubot',
+    output: '../../logs/output.log',
+    args: buildArgsArray(args),
+    maxRestarts: 2
+  };
 
   pm2.start(config, () => pm2.disconnect());
 }
