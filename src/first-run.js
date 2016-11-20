@@ -37,8 +37,8 @@ function message3(hubot) {
 }
 
 function message4(hubot) {
-  return hubot.speech().append('At this time all the gears are inactive. You can activate them using the command ')
-          .bold('activate gear-name').period().end();
+  return hubot.speech().append('At this time all the gears are active. You can deactivate them using the command ')
+          .bold('deactivate gear-name').period().end();
 }
 
 function message5(hubot) {
