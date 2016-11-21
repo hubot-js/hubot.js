@@ -145,6 +145,12 @@ function handleResponse(conversation, interaction, response) {
 
 function getExpectedResponse(expectedResponses, response) {
   if (expectedResponses) {
+    const responses = expectedResponses.filter(expectedResponse => expectedResponse.response);
+
+    if (responses.length === 0) {
+      return expectedResponses[0];
+    }
+
     return expectedResponses.find(r => r.response === response.text);
   }
 
