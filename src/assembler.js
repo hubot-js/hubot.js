@@ -57,8 +57,8 @@ module.exports = class Assembler {
     db.getDb().get('SELECT * FROM gears WHERE name = ?', gear.name).then((record) => {
       if (!record) {
         gear.active = true;
-        db.getDb()
-          .run('INSERT INTO gears(name, description, active) VALUES(?, ?, ?)', gear.name, gear.description, gear.active);
+        db.getDb().run('INSERT INTO gears(name, description, active) VALUES(?, ?, ?)',
+                      gear.name, gear.description, gear.active);
       } else {
         gear.active = record.active === '1';
       }
