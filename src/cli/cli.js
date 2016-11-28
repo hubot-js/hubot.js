@@ -46,7 +46,7 @@ function createParameters() {
 }
 
 function createHelpMessage() {
-  yargs.usage(`Hubot.js \nUsage: hubot <command> [options]`)
+  yargs.usage('Hubot.js \nUsage: hubot <command> [options]')
        .command(START_COMMAND, 'Start the hubot')
        .command(STOP_COMMAND, 'Stop the hubot')
        .command(RESTART_COMMAND, 'Restart the hubot')
