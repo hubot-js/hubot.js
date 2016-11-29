@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robsonbittencourt/hubot.js.git"
+    "url": "git+https://github.com/hubot-js/hubot.js.git"
   },
   "keywords": [
     "hubot",
@@ -24,27 +24,27 @@
   "author": "robsonbittencourt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/robsonbittencourt/hubot.js/issues"
+    "url": "https://github.com/hubot-js/hubot.js/issues"
   },
-  "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
+  "homepage": "https://github.com/hubot-js/hubot.js#readme",
   "dependencies": {
-    "slackbots": "^0.5.2",
-    "string": "^3.3.1",
-    "winston": "^2.2.0",
+    "slackbots": "^0.5.3",
+    "string": "^3.3.3",
+    "winston": "^2.3.0",
     "q": "^1.4.1",
-    "sqlite": "^2.2.0",
-    "pm2": "^2.0.19",
+    "sqlite": "^2.2.3",
+    "pm2": "^2.1.6",
     "dialog": "^0.2.0",
-    "yargs": "^6.2.0",
-    "gear-help": "^1.0.1",
-    "gear-jenkins": "^1.0.1"
+    "yargs": "^6.4.0",
+    "gear-help": "^2.0.0",
+    "gear-jenkins": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.12",
-    "eslint": "^3.8.0",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.11.1",
     "eslint-config-hubot-js": "^1.0.4",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2"
+    "mocha": "^3.2.0"
   }
 }
