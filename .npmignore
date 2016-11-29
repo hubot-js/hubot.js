@@ -13,3 +13,5 @@ node_modules
 hubot.db
 
 .vscode
+
+/media
