@@ -1,39 +1,50 @@
 {
-   "name": "hubot.js",
-   "version": "1.0.0",
-   "description": "A small robot written in Javascript (He does not like coffeescript)",
-   "main": "app.js",
-   "scripts": {
-      "test": "istanbul cover _mocha -- --recursive --reporter spec",
-      "coveralls": "cat ./coverage/lcov.info | coveralls"
-   },
-   "repository": {
-   "type": "git",
-   "url": "git+https://github.com/robsonbittencourt/hubot.js.git"
-   },
-   "keywords": [
-      "hubot",
-      "slack",
-      "docker",
-      "jenkins"
-   ],
-   "author": "robsonbittencourt",
-   "license": "MIT",
-   "bugs": {
-      "url": "https://github.com/robsonbittencourt/hubot.js/issues"
-   },
-   "homepage": "https://github.com/robsonbittencourt/hubot.js#readme",
-   "dependencies": {
-      "slackbots": "^0.5.2",
-      "string": "^3.3.1",
-      "winston": "^2.2.0",
-      "gear-help": "^1.0.1",
-      "gear-jenkins": "^1.0.1"
-   },
-   "devDependencies": {
-      "chai": "^3.5.0",
-      "mocha": "^3.0.2",
-      "istanbul": "^0.4.5",
-      "coveralls": "^2.11.12"
-   }
+  "name": "hubot.js",
+  "version": "1.0.0",
+  "description": "A small robot written in Javascript (He does not like coffeescript)",
+  "main": "index.js",
+  "bin": {
+    "hubot": "index.js"
+  },
+  "scripts": {
+    "test": "istanbul cover --include-all-sources _mocha -- --recursive --reporter spec",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hubot-js/hubot.js.git"
+  },
+  "keywords": [
+    "hubot",
+    "slack",
+    "docker",
+    "jenkins"
+  ],
+  "author": "robsonbittencourt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hubot-js/hubot.js/issues"
+  },
+  "homepage": "https://github.com/hubot-js/hubot.js#readme",
+  "dependencies": {
+    "slackbots": "^0.5.3",
+    "string": "^3.3.3",
+    "winston": "^2.3.0",
+    "q": "^1.4.1",
+    "sqlite": "^2.2.3",
+    "pm2": "^2.1.6",
+    "dialog": "^0.2.0",
+    "yargs": "^6.4.0",
+    "gear-help": "^2.0.0",
+    "gear-jenkins": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.11.1",
+    "eslint-config-hubot-js": "^1.0.4",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0"
+  }
 }

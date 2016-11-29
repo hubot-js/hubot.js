@@ -1,0 +1,18 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+         javascript:
+            mass_threshold: 70
+     
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
+  - "**.module"
+exclude_paths:
+- config/
+- test/
