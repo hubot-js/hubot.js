@@ -1,10 +1,12 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 const db = require('./lib/db');
 const log = require('./lib/log');
 const speech = require('./speech');
+const i18n = require('./lib/i18n');
 
 const gearNamePrefix = 'gear-';
 
@@ -42,6 +44,7 @@ module.exports = class Assembler {
     this.tryToLoad('categories', gear, this.loadCategories);
     this.tryToLoad('handlers', gear, this.loadHandlers);
     this.tryToLoad('configHandler', gear, this.loadConfigHandler);
+    this.tryToLoad('locales', gear, this.loadLocales);
   }
 
   tryToLoad(type, gear, assemble) {
@@ -94,6 +97,21 @@ module.exports = class Assembler {
     gear.configHandler = require(self.configsHandlersPath(gear));
   }
 
+  loadLocales(gear, self) {
+    fs.readdir(self.localesPath(gear), (error, list) => {
+      if (error) return;
+
+      gear.locales = [];
+
+      list.forEach((dir) => {
+        const localeFile = require(path.join(self.localesPath(gear), dir, 'translation.json'));
+        i18n.addResourceBundle(dir, gear.description, localeFile);
+
+        gear.locales.push(dir.toLowerCase());
+      });
+    });
+  }
+
   configsPath(gear) {
     return `${global.__nodeModules}${gear.name}/config/config.json`;
   }
@@ -114,6 +132,9 @@ module.exports = class Assembler {
     return `${global.__nodeModules}${gear.name}/src/configHandler/configHandler`;
   }
 
+  localesPath(gear) {
+    return `${global.__nodeModules}${gear.name}/locales`;
+  }
 };
 
 function logStartAssembling() {

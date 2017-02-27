@@ -1,0 +1,49 @@
+{
+  "locale": {
+    "change": "hubot change the language to $",
+    "sucess": "Language changed to *{{language}}*",
+    "error": "Ops. I don't know the language *{{language}}*"
+  },
+
+  "hello": "Hello,",
+  "thanks": "Thanks,",
+  "ops": "Ops! ",
+  "configure": "configure ",
+  "configureGear": "configure {{gear}}",
+  "didNotUnderstand": "Sorry, I didn't understand. (Expected responses: ",
+
+  "firstUse": {
+    "message1": "My name is {{botName}} and from now on I will help you with some tasks using the Slack.",
+    "message2": "Before I need you to do some settings. How was you who started me I will define you as my system administrator. So you can access the settings in the future.",
+    "message3": "Initially I do not know perform tasks. But there are gears that when coupled to me add me skills.",
+    "message4": "At this time all the gears are active. You can deactivate them using the command ",
+    "message5": "Some gears have settings. To let them use the command ",
+    "message6": "Below is a list of gears available:"
+  },
+
+  "gears": {
+    "description": "gear {{gearDescription}}",
+    "deactivate": "deactivate gear-name",
+    "configure": "configure gear-name",
+    "already": "This gear is already {{statusDescription}}.",
+    "activation": {
+      "success": "Successfully {{statusDescription}} *{{gearDescription}}*",
+      "error": "Could not {{statusDescription}} *{{gearDescription}}*",
+      "logs": "See the detailed error in logs",
+      "activate": "activate",
+      "deactivate": "deactivate",
+      "active": "active",
+      "inactive": "inactive",
+      "actived": "activated",
+      "deactivated": "deactivated"  
+    }
+  },
+
+  "feature": {
+    "disabled": "Sorry, this feature is disabled.",
+    "onlyChannel": "Sorry, this feature can only be performed on a channel.",
+    "onlyPrivate": "Sorry, this feature can only be performed directly with me in private."
+  } 
+}
+
+

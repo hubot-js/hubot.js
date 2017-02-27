@@ -1,12 +1,11 @@
 'use strict';
 
 const db = require('../../lib/db');
-const speech = require('../../speech');
 
 exports.handle = handle;
 
 function handle(hubot, message, core) {
-  const action = getAction(message);
+  const action = getAction(message, hubot);
 
   if (action && isGearChangeStatusMessage(action, hubot, message)) {
     core.isAdminUser(message.user)
@@ -22,12 +21,14 @@ function changeStatus(isAdmin, action, hubot, message) {
   if (isAdmin) {
     const gear = discoverGear(action, hubot, message);
 
-    if (gear && gear.active === action.status) {
-      hubot.speak(message, `This gear is already ${action.statusDescription}.`);
-    } else {
-      changeGearStatus(action, hubot, gear.description)
-        .then(() => hubot.speak(message, sucessMessage(action, gear.description)),
-              () => hubot.speak(message, errorMessage(action, gear.description)));
+    if (gear) {
+      if (gear.active === action.status) {
+        hubot.speak(message, 'gears.already', { statusDescription: action.already });
+      } else {
+        changeGearStatus(action, hubot, gear.description)
+          .then(() => hubot.speak(message, sucessMessage(action, hubot, gear.description)),
+          () => hubot.speak(message, errorMessage(action, hubot, gear.description)));
+      }
     }
   }
 }
@@ -47,24 +48,30 @@ function discoverGear(action, hubot, message) {
   return hubot.findGear(gearDescription);
 }
 
-function sucessMessage(action, gearDescription) {
-  return speech.start(`Successfully ${action.description}d `).bold(`gear ${gearDescription}`).end();
+function sucessMessage(action, hubot, gearDescription) {
+  return hubot.speech().append('gears.activation.success', { statusDescription: action.success, gearDescription })
+        .end();
 }
 
-function errorMessage(action, gearDescription) {
-  return speech.start(`Could not ${action.description} `).bold(`gear ${gearDescription}`).period()
-        .append('See the detailed error in logs').end();
+function errorMessage(action, hubot, gearDescription) {
+  return hubot.speech().append('gears.activation.error', { statusDescription: action.description, gearDescription })
+        .end();
 }
 
-function getAction(message) {
-  if (message.text.startsWith('activate')) {
-    return {
-      description: 'activate', status: true, statusDescription: 'active'
-    };
-  } else if (message.text.startsWith('deactivate')) {
-    return {
-      description: 'deactivate', status: false, statusDescription: 'inactive'
-    };
+function getAction(message, hubot) {
+  const active = hubot.i18n('gears.activation.active');
+  const inactive = hubot.i18n('gears.activation.inactive');
+  const activate = hubot.i18n('gears.activation.activate');
+  const deactivate = hubot.i18n('gears.activation.deactivate');
+  const activated = hubot.i18n('gears.activation.actived');
+  const deactivated = hubot.i18n('gears.activation.deactivated');
+
+  if (message.text.startsWith(activate)) {
+    return { description: activate, status: true, already: active, success: activated };
+  }
+
+  if (message.text.startsWith(deactivate)) {
+    return { description: deactivate, status: false, already: inactive, success: deactivated };
   }
 
   return null;

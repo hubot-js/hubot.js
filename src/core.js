@@ -7,6 +7,7 @@ const Bot = require('slackbots');
 const db = require('./lib/db');
 const Hubot = require('./hubot');
 const log = require('./lib/log');
+const i18n = require('./lib/i18n');
 const firstRun = require('./first-run');
 const Assembler = require('./assembler');
 const messageHandler = require('./message-handler/message-handler');
@@ -40,6 +41,7 @@ Core.prototype.onStart = function onStart() {
   this.hubot = new Hubot(this);
   this.hubot.gears = new Assembler().build();
   this.firstRunChecker();
+  this.setLanguage();
 };
 
 Core.prototype.onMessage = function onMessage(message) {
@@ -59,6 +61,11 @@ Core.prototype.firstRunChecker = function firstRunChecker() {
       isFirstRun = true;
     }
   });
+};
+
+Core.prototype.setLanguage = function setLanguage() {
+  db.getDb().get('SELECT * FROM config')
+    .then(config => i18n.changeLanguage(config.language));
 };
 
 Core.prototype.getUserByName = function getUserByName(name) {

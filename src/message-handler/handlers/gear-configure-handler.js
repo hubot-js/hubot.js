@@ -10,7 +10,7 @@ function handle(hubot, message, core) {
       if (isAdmin) {
         const param = {
           user: message.user,
-          gear: gearDescription(message),
+          gear: gearDescription(message, hubot),
           interactions: discoverConfig(hubot, message)
         };
 
@@ -22,16 +22,16 @@ function handle(hubot, message, core) {
 
 function isGearConfigureMessage(hubot, message) {
   return hubot.gears.find((gear) => {
-    const configureMessage = `configure ${gear.description}`;
+    const configureMessage = hubot.i18n('configureGear', { gear: gear.description });
 
     return message.text === configureMessage;
   }) != null;
 }
 
 function discoverConfig(hubot, message) {
-  return hubot.gears.find(g => g.description === gearDescription(message)).configs;
+  return hubot.gears.find(g => g.description === gearDescription(message, hubot)).configs;
 }
 
-function gearDescription(message) {
-  return message.text.replace('configure ', '');
+function gearDescription(message, hubot) {
+  return message.text.replace(hubot.i18n('configure'), '');
 }

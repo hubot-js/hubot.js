@@ -11,43 +11,25 @@ function firstRun(core, message) {
   const hubot = core.hubot;
   const messageDelay = 3000;
 
-  hubot.speak(message, message1(hubot, core, message), messageDelay)
-    .then(() => hubot.speak(message, message2(hubot), messageDelay))
-    .then(() => hubot.speak(message, message3(hubot), messageDelay))
-    .then(() => hubot.speak(message, message4(hubot), messageDelay))
-    .then(() => hubot.speak(message, message5(hubot), messageDelay))
-    .then(() => hubot.speak(message, message6(hubot), messageDelay))
-    .then(() => hubot.speak(message, postGearsNames(hubot), messageDelay));
+  hubot.speak(message, message1(hubot, core, message), null, messageDelay)
+    .then(() => hubot.speak(message, 'firstUse.message2', null, messageDelay))
+    .then(() => hubot.speak(message, 'firstUse.message3', null, messageDelay))
+    .then(() => hubot.speak(message, message4(hubot), null, messageDelay))
+    .then(() => hubot.speak(message, message5(hubot), null, messageDelay))
+    .then(() => hubot.speak(message, 'firstUse.message6', null, messageDelay))
+    .then(() => hubot.speak(message, postGearsNames(hubot), null, messageDelay));
 }
 
 function message1(hubot, core, message) {
-  return hubot.speech().hello(core.getUserById(message.user)).append('My name is ').append(core.name)
-    .append(' and from now on I will help you with some tasks using the Slack.').end();
-}
-
-function message2(hubot) {
-  return hubot.speech().append('Before I need you to do some settings.')
-          .append(' How was you who started me I will define you as my system administrator.')
-          .append(' So you can access the settings in the future.').end();
-}
-
-function message3(hubot) {
-  return hubot.speech().append('Initially I do not know perform tasks.')
-          .append(' But there are gears that when coupled to me add me skills.').end();
+  return hubot.speech().hello(core.getUserById(message.user)).append('firstUse.message1', { botName: 'hubot' }).end();
 }
 
 function message4(hubot) {
-  return hubot.speech().append('At this time all the gears are active. You can deactivate them using the command ')
-          .bold('deactivate gear-name').period().end();
+  return hubot.speech().append('firstUse.message4').bold('gears.deactivate').period().end();
 }
 
 function message5(hubot) {
-  return hubot.speech().append('Some gears have settings. To let them use the command ')
-          .bold('configure gear-name').period().end();
-}
-
-function message6(hubot) {
-  return hubot.speech().append('Below is a list of gears available:').end();
+  return hubot.speech().append('firstUse.message5').bold('gears.configure').period().end();
 }
 
 function postGearsNames(hubot) {

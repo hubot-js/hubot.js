@@ -36,6 +36,8 @@
     "pm2": "^2.1.6",
     "dialog": "^0.2.0",
     "yargs": "^6.4.0",
+    "i18next": "^7.1.0",
+    "i18next-sync-fs-backend": "^0.1.0",
     "gear-help": "^2.0.0",
     "gear-jenkins": "^2.0.0"
   },
