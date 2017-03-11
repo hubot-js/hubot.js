@@ -1,5 +1,6 @@
 'use strict';
 
+const trigger = require('../trigger');
 const conversation = require('../conversation');
 
 exports.handle = handle;
@@ -24,7 +25,7 @@ function isGearConfigureMessage(hubot, message) {
   return hubot.gears.find((gear) => {
     const configureMessage = hubot.i18n('configureGear', { gear: gear.description });
 
-    return message.text === configureMessage;
+    return trigger.check(message.text, configureMessage).ok;
   }) != null;
 }
 

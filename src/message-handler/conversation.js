@@ -5,6 +5,7 @@ const EventEmitter = require('events');
 const Q = require('q');
 
 const i18n = require('../lib/i18n');
+const trigger = require('./trigger');
 
 exports.startConversation = startConversation;
 exports.hasActiveConversation = hasActiveConversation;
@@ -153,7 +154,7 @@ function getExpectedResponse(expectedResponses, response) {
       return expectedResponses[0];
     }
 
-    return expectedResponses.find(r => i18n.t(r.response) === response.text);
+    return expectedResponses.find(r => trigger.check(i18n.t(r.response), response.text).ok);
   }
 
   return null;

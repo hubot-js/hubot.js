@@ -10,6 +10,7 @@ const log = require('./lib/log');
 const i18n = require('./lib/i18n');
 const firstRun = require('./first-run');
 const Assembler = require('./assembler');
+const normalizer = require('./lib/normalizer');
 const messageHandler = require('./message-handler/message-handler');
 
 let botName;
@@ -46,6 +47,8 @@ Core.prototype.onStart = function onStart() {
 
 Core.prototype.onMessage = function onMessage(message) {
   if (isChatMessage(message) && !isFromHubot(message)) {
+    message.text = normalizer.normalize(message.text);
+
     if (isFirstInteraction(this, message)) {
       isFirstRun = false;
       firstRun.firstRun(this, message);

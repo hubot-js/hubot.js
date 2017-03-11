@@ -1,6 +1,7 @@
 'use strict';
 
 const db = require('../../lib/db');
+const trigger = require('../trigger');
 
 exports.handle = handle;
 
@@ -40,7 +41,7 @@ function changeGearStatus(action, hubot, gear) {
 }
 
 function isGearChangeStatusMessage(action, hubot, message) {
-  return hubot.gears.find(gear => message.text === `${action.description} ${gear.description}`) !== null;
+  return hubot.gears.find(gear => trigger.check(message.text, `${action.description} ${gear.description}`).ok) !== null;
 }
 
 function discoverGear(action, hubot, message) {

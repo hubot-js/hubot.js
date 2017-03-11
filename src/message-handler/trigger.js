@@ -1,6 +1,6 @@
 'use strict';
 
-const stringfy = require('string');
+const normalize = require('../lib/normalizer').normalize;
 
 exports.check = check;
 
@@ -68,8 +68,4 @@ class TriggerParams {
     // message: 'alpha$beta'  >  ['alpha', 'beta']
     return newMessage.split(this.placeholder).filter(s => s);
   }
-}
-
-function normalize(text) {
-  return stringfy(text).trim().latinise().s.toLowerCase();
 }
