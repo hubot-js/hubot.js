@@ -1,15 +1,7 @@
 {
-  "locale": {
-    "change": "hubot change the language to $",
-    "sucess": "Language changed to *{{language}}*",
-    "error": "Ops. I don't know the language *{{language}}*"
-  },
-
   "hello": "Hello,",
   "thanks": "Thanks,",
   "ops": "Ops! ",
-  "configure": "configure ",
-  "configureGear": "configure {{gear}}",
   "didNotUnderstand": "Sorry, I didn't understand. (Expected responses: ",
 
   "firstUse": {
@@ -24,19 +16,7 @@
   "gears": {
     "description": "gear {{gearDescription}}",
     "deactivate": "deactivate gear-name",
-    "configure": "configure gear-name",
-    "already": "This gear is already {{statusDescription}}.",
-    "activation": {
-      "success": "Successfully {{statusDescription}} *{{gearDescription}}*",
-      "error": "Could not {{statusDescription}} *{{gearDescription}}*",
-      "logs": "See the detailed error in logs",
-      "activate": "activate",
-      "deactivate": "deactivate",
-      "active": "active",
-      "inactive": "inactive",
-      "actived": "activated",
-      "deactivated": "deactivated"  
-    }
+    "configure": "configure gear-name"
   },
 
   "feature": {

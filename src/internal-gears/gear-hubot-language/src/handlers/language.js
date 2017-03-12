@@ -1,13 +1,13 @@
 'use strict';
 
-const db = require('../../lib/db');
-const i18n = require('../../lib/i18n');
-const trigger = require('../trigger');
+const db = require('../../../../lib/db');
+const i18n = require('../../../../lib/i18n');
+const trigger = require('../../../../message-handler/trigger');
 
 exports.handle = handle;
 
 function handle(hubot, message) {
-  const acceptance = trigger.check(message.text, hubot.i18n('locale.change'));
+  const acceptance = trigger.check(message.text, hubot.i18n('hubot-language:command.change.trigger'));
 
   if (acceptance.ok) {
     const language = acceptance.params[0];
@@ -19,9 +19,9 @@ function handle(hubot, message) {
 
       db.getDb().run('UPDATE config SET language = ?', language);
 
-      hubot.speak(message, 'locale.sucess', { language });
+      hubot.speak(message, 'hubot-language:sucess', { language });
     } else {
-      hubot.speak(message, 'locale.error', { language });
+      hubot.speak(message, 'hubot-language:error', { language });
     }
 
     return true;

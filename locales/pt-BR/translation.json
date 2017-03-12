@@ -2,15 +2,7 @@
   "hello": "Olá,",
   "thanks": "Obrigado,",
   "ops": "Ops! ",
-  "configure": "configurar ",
-  "configureGear": "configurar {{gear}}",
   "didNotUnderstand": "Desculpe, eu não entendi. (Respostas esperadas: ",
-
-  "locale": {
-    "change": "hubot alterar idioma para $",
-    "sucess": "Idioma alterado para *{{language}}*",
-    "error": "Ops. Eu não conheço o idioma *{{language}}*"
-  },  
 
   "firstUse": {
     "message1": "Meu nome é {{botName}} e a partir de agora eu vou lhe ajudar com algumas tarefas utilizando o Slack.",
@@ -24,19 +16,7 @@
   "gears": {
     "description": "gear {{gearDescription}}",
     "deactivate": "desativar nome-da-engrenagem",
-    "configure": "configurar nome-da-engrenagem",
-    "already": "Esta engrenagem já está {{statusDescription}}.",
-    "activation": {
-      "success": "*{{gearDescription}}* {{statusDescription}} com sucesso",
-      "error": "Não consegui {{statusDescription}} *{{gearDescription}}*",
-      "logs": "Veja o detalhe do erro nos logs",
-      "activate": "ativar",
-      "deactivate": "desativar",
-      "active": "ativada",
-      "inactive": "inativada",
-      "actived": "ativado",
-      "deactivated": "desativado"
-    }
+    "configure": "configurar nome-da-engrenagem"
   },
 
   "feature": {

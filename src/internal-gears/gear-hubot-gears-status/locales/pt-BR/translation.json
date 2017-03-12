@@ -1,0 +1,27 @@
+{
+  "category": {
+    "name": "Geral",
+    "description": "Comandos gerais"
+  },
+  "command": {
+    "activate": {
+      "trigger": "ativar $",
+      "description": "Para ativar uma engrenagem use o comando substituindo $ pelo nome da engrenagem."
+    },
+    "deactivate": {
+      "trigger": "desativar $",
+      "description": "Para desativar uma engrenagem use o comando substituindo $ pelo nome da engrenagem."
+    }
+  },
+  "activation": {
+    "already": "Esta engrenagem já está {{statusDescription}}.",
+    "success": "*{{gearDescription}}* {{statusDescription}} com sucesso",
+    "error": "Não consegui {{statusDescription}} *{{gearDescription}}*",
+    "activate": "ativar",
+    "deactivate": "desativar",
+    "active": "ativada",
+    "inactive": "inativada",
+    "actived": "ativado",
+    "deactivated": "desativado"
+  }
+}

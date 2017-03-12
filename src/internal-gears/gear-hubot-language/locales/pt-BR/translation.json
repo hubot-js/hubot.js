@@ -1,0 +1,15 @@
+{
+  "category": {
+    "name": "Geral",
+    "description": "Comandos gerais"
+  },
+  "command": {
+    "change": {
+      "trigger": "alterar idioma para $",
+      "description": "Para alterar o idioma use o comando substituindo $ pelo idioma."
+    }
+  },
+  "sucess": "Idioma alterado para *{{language}}*",
+  "error": "Ops. Eu não conheço o idioma *{{language}}*"
+}
+

@@ -1,0 +1,13 @@
+{
+  "category": {
+    "name": "Configuração de Engrenagens",
+    "description": "Configurações de engrenagens"
+  },
+  "command": {
+    "configure": {
+      "trigger": "configurar $",
+      "description": "Habilita as opções de configuração para engrenagens."
+    }
+  },
+  "configure": "configurar "
+}

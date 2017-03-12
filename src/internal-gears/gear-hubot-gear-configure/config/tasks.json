@@ -1,0 +1,8 @@
+[
+  {
+    "handler": "gear-configure",
+    "trigger": "hubot-gear-configure:command.configure.trigger",
+    "category": "hubot",
+    "description": "hubot-gear-configure:command.configure.description"
+  }
+]

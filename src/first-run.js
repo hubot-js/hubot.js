@@ -35,7 +35,9 @@ function message5(hubot) {
 function postGearsNames(hubot) {
   const speech = hubot.speech();
 
-  hubot.gears.forEach(g => speech.item(g.description).line());
+  const gears = hubot.gears.filter(g => !g.isInternal);
+
+  gears.forEach(g => speech.item(g.description).line());
 
   return speech.end();
 }

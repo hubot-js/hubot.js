@@ -1,0 +1,15 @@
+[
+  {
+    "handler": "status",
+    "trigger": "hubot-gears-status:command.activate.trigger",
+    "category": "hubot",
+    "description": "hubot-gears-status:command.activate.description"
+  }, 
+
+  {
+    "handler": "status",
+    "trigger": "hubot-gears-status:command.deactivate.trigger",
+    "category": "hubot",
+    "description": "hubot-gears-status:command.deactivate.description"
+  }
+]

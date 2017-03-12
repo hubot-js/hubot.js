@@ -1,6 +1,7 @@
 'use strict';
 
 const util = require('util');
+const path = require('path');
 
 const Bot = require('slackbots');
 
@@ -39,8 +40,15 @@ Core.prototype.run = function run() {
 
 Core.prototype.onStart = function onStart() {
   botUser = this.getUserByName(botName);
+
   this.hubot = new Hubot(this);
-  this.hubot.gears = new Assembler().build();
+
+  const internalGearPath = path.join(__dirname, 'internal-gears/');
+  this.hubot.gears = new Assembler(internalGearPath, true).build();
+
+  const gears = new Assembler(global.__nodeModules, false).build();
+  this.hubot.gears = this.hubot.gears.concat(gears);
+
   this.firstRunChecker();
   this.setLanguage();
 };
