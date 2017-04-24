@@ -12,8 +12,10 @@ const gearNamePrefix = 'gear-';
 
 module.exports = class Assembler {
 
-  constructor() {
+  constructor(gearsPath, isInternal) {
     this.gears = [];
+    this.gearsPath = gearsPath;
+    this.isInternal = isInternal;
   }
 
   build() {
@@ -22,20 +24,24 @@ module.exports = class Assembler {
   }
 
   loadGears(self) {
-    fs.readdir(global.__nodeModules, (error, list) => {
-      const gearsNames = list.filter(e => e.startsWith(gearNamePrefix));
+    const list = fs.readdirSync(this.gearsPath);
 
-      gearsNames.forEach((gearName) => {
-        const gearDescription = gearName.replace('gear-', '');
+    const gearsNames = list.filter(e => e.startsWith(gearNamePrefix));
 
-        self.gears.push({ name: gearName, description: gearDescription });
-      });
+    gearsNames.forEach((gearName) => {
+      const gearDescription = gearName.replace('gear-', '');
 
-      self.gears.forEach((gear, index) => self.loadGear(self.gears, gear, index));
+      self.gears.push({ name: gearName, description: gearDescription });
     });
+
+    self.gears.forEach((gear, index) => self.loadGear(self.gears, gear, index));
   }
 
   loadGear(gears, gear, index) {
+    if (gear) {
+      gear.isInternal = this.isInternal;
+    }
+
     logStartAssembling();
     logAddingGear(gears, gear, index);
     this.tryToLoad('gearStatus', gear, this.loadGearStatus);
@@ -113,27 +119,27 @@ module.exports = class Assembler {
   }
 
   configsPath(gear) {
-    return `${global.__nodeModules}${gear.name}/config/config.json`;
+    return `${this.gearsPath}${gear.name}/config/config.json`;
   }
 
   tasksPath(gear) {
-    return `${global.__nodeModules}${gear.name}/config/tasks.json`;
+    return `${this.gearsPath}${gear.name}/config/tasks.json`;
   }
 
   categoriesPath(gear) {
-    return `${global.__nodeModules}${gear.name}/config/categories.json`;
+    return `${this.gearsPath}${gear.name}/config/categories.json`;
   }
 
   handlersPath(gear, handler) {
-    return `${global.__nodeModules}${gear.name}/src/handlers/${handler}`;
+    return `${this.gearsPath}${gear.name}/src/handlers/${handler}`;
   }
 
   configsHandlersPath(gear) {
-    return `${global.__nodeModules}${gear.name}/src/configHandler/configHandler`;
+    return `${this.gearsPath}${gear.name}/src/configHandler/configHandler`;
   }
 
   localesPath(gear) {
-    return `${global.__nodeModules}${gear.name}/locales`;
+    return `${this.gearsPath}${gear.name}/locales`;
   }
 };
 

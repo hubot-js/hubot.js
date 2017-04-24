@@ -1,0 +1,13 @@
+{
+  "category": {
+    "name": "Gear Configuration",
+    "description": "Gears configurations"
+  },
+  "command": {
+    "configure": {
+      "trigger": "configure $",
+      "description": "Enables configuration options for gears"
+    }
+  },
+  "configure": "configure "  
+}

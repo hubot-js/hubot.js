@@ -74,4 +74,18 @@ module.exports = class Hubot {
     return this.gears.find(g => g.description === gear);
   }
 
+  isAdminUser(user) {
+    return core.isAdminUser(user);
+  }
+
+  removeBotNameFromMessage(message) {
+    let messageWithoutBotName = message.text;
+
+    if (messageWithoutBotName.startsWith(`${core.name} `)) {
+      messageWithoutBotName = messageWithoutBotName.replace(`${core.name} `, '');
+    }
+
+    return messageWithoutBotName;
+  }
+
 };
