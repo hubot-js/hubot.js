@@ -1,0 +1,8 @@
+[
+  {
+    "key": "hubot",
+    "name": "hubot-gears-status:category.name",
+    "description": "hubot-gears-status:category.description",
+    "visible": true
+  }
+]

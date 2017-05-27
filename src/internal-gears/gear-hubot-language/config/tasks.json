@@ -1,0 +1,8 @@
+[
+  {
+    "handler": "language",
+    "trigger": "hubot-language:command.change.trigger",
+    "category": "hubot",
+    "description": "hubot-language:command.change.description"
+  }
+]

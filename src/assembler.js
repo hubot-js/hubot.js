@@ -1,17 +1,21 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 const db = require('./lib/db');
 const log = require('./lib/log');
 const speech = require('./speech');
+const i18n = require('./lib/i18n');
 
 const gearNamePrefix = 'gear-';
 
 module.exports = class Assembler {
 
-  constructor() {
+  constructor(gearsPath, isInternal) {
     this.gears = [];
+    this.gearsPath = gearsPath;
+    this.isInternal = isInternal;
   }
 
   build() {
@@ -20,20 +24,24 @@ module.exports = class Assembler {
   }
 
   loadGears(self) {
-    fs.readdir(global.__nodeModules, (error, list) => {
-      const gearsNames = list.filter(e => e.startsWith(gearNamePrefix));
+    const list = fs.readdirSync(this.gearsPath);
 
-      gearsNames.forEach((gearName) => {
-        const gearDescription = gearName.replace('gear-', '');
+    const gearsNames = list.filter(e => e.startsWith(gearNamePrefix));
 
-        self.gears.push({ name: gearName, description: gearDescription });
-      });
+    gearsNames.forEach((gearName) => {
+      const gearDescription = gearName.replace('gear-', '');
 
-      self.gears.forEach((gear, index) => self.loadGear(self.gears, gear, index));
+      self.gears.push({ name: gearName, description: gearDescription });
     });
+
+    self.gears.forEach((gear, index) => self.loadGear(self.gears, gear, index));
   }
 
   loadGear(gears, gear, index) {
+    if (gear) {
+      gear.isInternal = this.isInternal;
+    }
+
     logStartAssembling();
     logAddingGear(gears, gear, index);
     this.tryToLoad('gearStatus', gear, this.loadGearStatus);
@@ -42,6 +50,7 @@ module.exports = class Assembler {
     this.tryToLoad('categories', gear, this.loadCategories);
     this.tryToLoad('handlers', gear, this.loadHandlers);
     this.tryToLoad('configHandler', gear, this.loadConfigHandler);
+    this.tryToLoad('locales', gear, this.loadLocales);
   }
 
   tryToLoad(type, gear, assemble) {
@@ -94,26 +103,44 @@ module.exports = class Assembler {
     gear.configHandler = require(self.configsHandlersPath(gear));
   }
 
+  loadLocales(gear, self) {
+    fs.readdir(self.localesPath(gear), (error, list) => {
+      if (error) return;
+
+      gear.locales = [];
+
+      list.forEach((dir) => {
+        const localeFile = require(path.join(self.localesPath(gear), dir, 'translation.json'));
+        i18n.addResourceBundle(dir, gear.description, localeFile);
+
+        gear.locales.push(dir.toLowerCase());
+      });
+    });
+  }
+
   configsPath(gear) {
-    return `${global.__nodeModules}${gear.name}/config/config.json`;
+    return `${this.gearsPath}${gear.name}/config/config.json`;
   }
 
   tasksPath(gear) {
-    return `${global.__nodeModules}${gear.name}/config/tasks.json`;
+    return `${this.gearsPath}${gear.name}/config/tasks.json`;
   }
 
   categoriesPath(gear) {
-    return `${global.__nodeModules}${gear.name}/config/categories.json`;
+    return `${this.gearsPath}${gear.name}/config/categories.json`;
   }
 
   handlersPath(gear, handler) {
-    return `${global.__nodeModules}${gear.name}/src/handlers/${handler}`;
+    return `${this.gearsPath}${gear.name}/src/handlers/${handler}`;
   }
 
   configsHandlersPath(gear) {
-    return `${global.__nodeModules}${gear.name}/src/configHandler/configHandler`;
+    return `${this.gearsPath}${gear.name}/src/configHandler/configHandler`;
   }
 
+  localesPath(gear) {
+    return `${this.gearsPath}${gear.name}/locales`;
+  }
 };
 
 function logStartAssembling() {

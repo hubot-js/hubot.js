@@ -127,5 +127,5 @@ describe('The Hubot Assembler', () => {
 });
 
 function getAssembler() {
-  return new Assembler();
+  return new Assembler(global.__nodeModules, false);
 }

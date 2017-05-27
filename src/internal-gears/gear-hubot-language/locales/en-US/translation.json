@@ -1,0 +1,15 @@
+{
+  "category": {
+    "name": "General",
+    "description": "General commands"
+  },
+  "command": {
+    "change": {
+      "trigger": "change the language to $",
+      "description": "To change the language use the command replacing $ by language. Ex: change the language to pt-br"
+    }
+  },
+
+  "sucess": "Language changed to *{{language}}*",
+  "error": "Ops. I don't know the language *{{language}}*"
+}

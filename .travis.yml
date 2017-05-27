@@ -3,7 +3,7 @@ sudo: required
 language: node_js
 
 node_js:
-  - 7.1.0
+  - 7.7.2
 
 services:
   - docker
@@ -25,7 +25,7 @@ deploy:
 
 after_deploy:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-      docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" ;
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" ;
 
       export VERSION=$(node -p -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")
     

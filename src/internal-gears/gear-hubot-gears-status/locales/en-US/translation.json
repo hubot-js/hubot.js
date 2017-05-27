@@ -1,0 +1,27 @@
+{
+  "category": {
+    "name": "General",
+    "description": "General commands"
+  },
+  "command": {
+    "activate": {
+      "trigger": "activate $",
+      "description": "To activate a gear use the command replacing $ by gear name."
+    }, 
+    "deactivate": {
+      "trigger": "deactivate $",
+      "description": "To deactivate a gear use the command replacing $ by gear name."
+    }
+  },
+  "activation": {
+    "already": "This gear is already {{statusDescription}}.",
+    "success": "Successfully {{statusDescription}} *{{gearDescription}}*",
+    "error": "Could not {{statusDescription}} *{{gearDescription}}*",
+    "activate": "activate",
+    "deactivate": "deactivate",
+    "active": "active",
+    "inactive": "inactive",
+    "actived": "activated",
+    "deactivated": "deactivated"
+  }
+}

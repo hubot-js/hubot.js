@@ -4,6 +4,9 @@ const EventEmitter = require('events');
 
 const Q = require('q');
 
+const i18n = require('../lib/i18n');
+const trigger = require('./trigger');
+
 exports.startConversation = startConversation;
 exports.hasActiveConversation = hasActiveConversation;
 exports.notify = notify;
@@ -51,7 +54,7 @@ function speak(hubot, message, conversation, callback) {
 
       if (withExpectedResponse(conversation, interaction, response, hubot, message, callback)) return;
 
-      Q(handleResponse(conversation, interaction, response)).then((text) => {
+      Q(handleResponse(hubot, conversation, interaction, response)).then((text) => {
         conversation.nextInteration++;
 
         if (text) {
@@ -82,7 +85,7 @@ function justSpeak(conversation, interaction, callback) {
 
 function withoutExpectedResponse(conversation, interaction, response, hubot, message, callback) {
   if (!interaction.expectedResponses) {
-    Q(handleResponse(conversation, interaction, response)).then((text) => {
+    Q(handleResponse(hubot, conversation, interaction, response)).then((text) => {
       conversation.nextInteration++;
       speakReturnedText(hubot, message, conversation, text, callback);
     }, (text) => {
@@ -134,10 +137,10 @@ function hasAnotherInteraction(conversation, interaction, response, hubot, messa
   return false;
 }
 
-function handleResponse(conversation, interaction, response) {
+function handleResponse(hubot, conversation, interaction, response) {
   if (interaction.handler) {
     const handler = require(`${nodeModules}gear-${conversation.gear}/${interaction.handler}`);
-    return handler.handle(response.text);
+    return handler.handle(hubot, response.text);
   }
 
   return null;
@@ -151,7 +154,7 @@ function getExpectedResponse(expectedResponses, response) {
       return expectedResponses[0];
     }
 
-    return expectedResponses.find(r => r.response === response.text);
+    return expectedResponses.find(r => trigger.check(i18n.t(r.response), response.text).ok);
   }
 
   return null;
@@ -160,13 +163,13 @@ function getExpectedResponse(expectedResponses, response) {
 function getExpectedResponses(interaction) {
   const expectedResponses = [];
 
-  interaction.expectedResponses.forEach(e => expectedResponses.push(e.response));
+  interaction.expectedResponses.forEach(e => expectedResponses.push(i18n.t(e.response)));
 
   return expectedResponses;
 }
 
 function invalidResponseMessage(hubot, expectedResponses) {
-  return hubot.speech().append('Sorry, I didn\'t understand.(Expected responses: ')
+  return hubot.speech().append('didNotUnderstand')
     .bold(expectedResponses.join(', ')).append(').').end();
 }
 

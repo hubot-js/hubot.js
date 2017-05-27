@@ -3,6 +3,7 @@
 const Q = require('q');
 
 const log = require('./lib/log');
+const i18n = require('./lib/i18n');
 const speech = require('./speech');
 
 let core;
@@ -14,14 +15,14 @@ module.exports = class Hubot {
     core = receivedCore;
   }
 
-  speakTo(recipient, text, message, delay = 1000) {
+  speakTo(recipient, text, vars, message, delay = 1000) {
     const deferred = Q.defer();
     const channel = message ? message.channel : recipient;
 
     core.ws.send(JSON.stringify({ type: 'typing', channel }));
 
     setTimeout(() => {
-      core.postMessage(recipient, text, { as_user: true })
+      core.postMessage(recipient, i18n.t(text, vars), { as_user: true })
         .then(() => deferred.resolve(),
               () => deferred.reject());
     }, delay);
@@ -29,20 +30,24 @@ module.exports = class Hubot {
     return deferred.promise;
   }
 
-  speak(message, text, delay) {
-    return this.speakTo(this.getRecipient(message), text, message, delay);
+  speak(message, text, vars, delay) {
+    return this.speakTo(this.getRecipient(message), text, vars, message, delay);
+  }
+
+  i18n(text, vars) {
+    return i18n.t(text, vars);
   }
 
   logInfo(info) {
-    log.info(info);
+    log.info(i18n.t(info));
   }
 
   logError(error) {
-    log.error(error);
+    log.error(i18n.t(error));
   }
 
   logDetailedError(error, metadata) {
-    log.detailedError(error, metadata);
+    log.detailedError(i18n.t(error), metadata);
   }
 
   isFromChannel(message) {
@@ -61,12 +66,26 @@ module.exports = class Hubot {
     return core.getRecipient(message);
   }
 
-  speech(message) {
-    return speech.start(message);
+  speech(text) {
+    return speech.start(text);
   }
 
   findGear(gear) {
     return this.gears.find(g => g.description === gear);
+  }
+
+  isAdminUser(user) {
+    return core.isAdminUser(user);
+  }
+
+  removeBotNameFromMessage(message) {
+    let messageWithoutBotName = message.text;
+
+    if (messageWithoutBotName.startsWith(`${core.name} `)) {
+      messageWithoutBotName = messageWithoutBotName.replace(`${core.name} `, '');
+    }
+
+    return messageWithoutBotName;
   }
 
 };

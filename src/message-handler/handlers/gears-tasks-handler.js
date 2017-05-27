@@ -20,7 +20,11 @@ function handle(hubot, message, core) {
 }
 
 function tryExecuteTask(hubot, core, gear, message, task) {
-  const acceptance = trigger.check(message.text, task.trigger);
+  if (!shouldCallTask(message, core)) return false;
+
+  const messageWithoutBotName = hubot.removeBotNameFromMessage(message);
+
+  const acceptance = trigger.check(messageWithoutBotName, hubot.i18n(task.trigger));
 
   if (acceptance.ok) {
     if (gear.active) {
@@ -28,11 +32,15 @@ function tryExecuteTask(hubot, core, gear, message, task) {
         return true;
       }
 
-      const hubotClone = getHubotClone(core);
       const handler = getHandler(gear, task);
-      handler.handle(hubotClone, message, task, acceptance.params);
+
+      if (gear.isInternal) {
+        handler.handle(hubot, message, task, acceptance.params);
+      } else {
+        handler.handle(getHubotClone(core), message, task, acceptance.params);
+      }
     } else {
-      hubot.speak(message, 'Sorry, this feature is disabled.');
+      hubot.speak(message, 'feature.disabled');
     }
 
     return true;
@@ -41,14 +49,29 @@ function tryExecuteTask(hubot, core, gear, message, task) {
   return false;
 }
 
+function shouldCallTask(message, core) {
+  let triggerOk = false;
+  const isToBotMessage = message.text.startsWith(`${core.name} `);
+
+  if (core.isPrivateConversation(message)) {
+    triggerOk = true;
+  }
+
+  if (!core.isPrivateConversation(message) && isToBotMessage) {
+    triggerOk = true;
+  }
+
+  return triggerOk;
+}
+
 function incorretMessageSource(hubot, task, message) {
   if (task.onlyInChannel && !hubot.isFromChannel(message)) {
-    hubot.speak(message, 'Sorry, this feature can only be performed on a channel.');
+    hubot.speak(message, 'feature.onlyChannel');
     return true;
   }
 
   if (task.onlyInPrivate && !hubot.isFromPrivate(message)) {
-    hubot.speak(message, 'Sorry, this feature can only be performed directly with me in private.');
+    hubot.speak(message, 'feature.onlyPrivate');
     return true;
   }
 

@@ -1,5 +1,7 @@
 'use strict';
 
+const i18n = require('./lib/i18n');
+
 exports.start = start;
 exports.error = error;
 
@@ -21,18 +23,21 @@ Speecher.prototype.init = function init(text) {
   return this;
 };
 
-Speecher.prototype.append = function append(text) {
-  if (this.initialized()) this.message += text;
+Speecher.prototype.append = function append(text, vars) {
+  if (this.initialized()) {
+    this.message += i18n.t(text, vars);
+  }
+
   return this;
 };
 
 Speecher.prototype.hello = function hello(user) {
-  this.append('Hello,').user(user).append('! ');
+  this.append('hello').user(user).append('! ');
   return this;
 };
 
 Speecher.prototype.thanks = function thanks(user) {
-  this.append('Thanks,').user(user).append('!! ');
+  this.append('thanks').user(user).append('!! ');
   return this;
 };
 
@@ -46,19 +51,21 @@ Speecher.prototype.channel = function channel() {
   return this;
 };
 
-Speecher.prototype.bold = function bold(text) {
-  this.append(`*${text}*`);
+Speecher.prototype.bold = function bold(text, vars) {
+  const translatedText = i18n.t(text, vars);
+  this.append(`*${translatedText}*`);
   return this;
 };
 
-Speecher.prototype.italic = function italic(text) {
-  this.append(`_${text}_`);
+Speecher.prototype.italic = function italic(text, vars) {
+  const translatedText = i18n.t(text, vars);
+  this.append(`_${translatedText}_`);
   return this;
 };
 
 Speecher.prototype.errorOccurs = function errorOccurs(text) {
   this.isError = true;
-  this.init().append(':exclamation: _').append(`Ops! ${optionalText(text)}`);
+  this.init().append(':exclamation: _').append('ops').append(optionalText(text));
   return this;
 };
 

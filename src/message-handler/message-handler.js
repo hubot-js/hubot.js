@@ -1,10 +1,8 @@
 'use strict';
 
 const firstRun = require('./handlers/first-run-handler');
-const gearStatus = require('./handlers/gear-status-handler');
 const gearsTasks = require('./handlers/gears-tasks-handler');
 const conversation = require('./handlers/conversation-handler');
-const gearConfigure = require('./handlers/gear-configure-handler');
 
 exports.callTasks = callTasks;
 
@@ -24,8 +22,6 @@ function getHandlers() {
   return [
     firstRun,
     conversation,
-    gearStatus,
-    gearConfigure,
     gearsTasks
   ];
 }

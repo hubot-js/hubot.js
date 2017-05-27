@@ -1,14 +1,17 @@
 'use strict';
 
 const util = require('util');
+const path = require('path');
 
 const Bot = require('slackbots');
 
 const db = require('./lib/db');
 const Hubot = require('./hubot');
 const log = require('./lib/log');
+const i18n = require('./lib/i18n');
 const firstRun = require('./first-run');
 const Assembler = require('./assembler');
+const normalizer = require('./lib/normalizer');
 const messageHandler = require('./message-handler/message-handler');
 
 let botName;
@@ -37,13 +40,23 @@ Core.prototype.run = function run() {
 
 Core.prototype.onStart = function onStart() {
   botUser = this.getUserByName(botName);
+
   this.hubot = new Hubot(this);
-  this.hubot.gears = new Assembler().build();
+
+  const internalGearPath = path.join(__dirname, 'internal-gears/');
+  this.hubot.gears = new Assembler(internalGearPath, true).build();
+
+  const gears = new Assembler(global.__nodeModules, false).build();
+  this.hubot.gears = this.hubot.gears.concat(gears);
+
   this.firstRunChecker();
+  this.setLanguage();
 };
 
 Core.prototype.onMessage = function onMessage(message) {
   if (isChatMessage(message) && !isFromHubot(message)) {
+    message.text = normalizer.normalize(message.text);
+
     if (isFirstInteraction(this, message)) {
       isFirstRun = false;
       firstRun.firstRun(this, message);
@@ -59,6 +72,11 @@ Core.prototype.firstRunChecker = function firstRunChecker() {
       isFirstRun = true;
     }
   });
+};
+
+Core.prototype.setLanguage = function setLanguage() {
+  db.getDb().get('SELECT * FROM config')
+    .then(config => i18n.changeLanguage(config.language));
 };
 
 Core.prototype.getUserByName = function getUserByName(name) {

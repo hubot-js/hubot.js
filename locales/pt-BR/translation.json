@@ -1,0 +1,27 @@
+{
+  "hello": "Olá,",
+  "thanks": "Obrigado,",
+  "ops": "Ops! ",
+  "didNotUnderstand": "Desculpe, eu não entendi. (Respostas esperadas: ",
+
+  "firstUse": {
+    "message1": "Meu nome é {{botName}} e a partir de agora eu vou lhe ajudar com algumas tarefas utilizando o Slack.",
+    "message2": "Antes eu preciso que você faça algumas configurações. Como foi você que me iniciou vou defini-lo como meu administrador. Então você pode acessar as configurações no futuro.",
+    "message3": "Inicialmente eu não sei fazer muitas coisas. Mas existem engrenagens que quando acopladas à mim me adicionam habilidades.",
+    "message4": "Neste momento todas as engrenagens estão ativas. Você pode desativá-las utilizando o comando ",
+    "message5": "Algumas engrenagens possuem configurações. Para fazê-las use o comando ",
+    "message6": "Abaixo segue uma lista com as engrenagens disponíveis:"
+  },
+
+  "gears": {
+    "description": "gear {{gearDescription}}",
+    "deactivate": "desativar nome-da-engrenagem",
+    "configure": "configurar nome-da-engrenagem"
+  },
+
+  "feature": {
+    "disabled": "Desculpe, essa funcionalidade está desabilitada.",
+    "onlyChannel": "Desculpe, esta funcionalidade só pode ser utilizada em um canal.",
+    "onlyPrivate": "Desculpe. esta funcionalidade só pode ser utilizada diretamente comigo no privado."
+  }
+}
