@@ -115,15 +115,6 @@ hubot help
 
 ![help](media/help.png)
 
-## Development setup
-- Fork and clone this project
-- In the main directory run ```npm install```to install dependencies.
-- Write your code
-- To run tests use ```npm test``` command
-
-## Contributors
-[Robson Rosa](https://github.com/robsonrosa)
-
 ## Meta
 Robson Bittencourt - @rluizv - robson.luizv@gmail.com
 
