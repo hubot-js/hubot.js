@@ -77,6 +77,10 @@ module.exports = class Hubot {
     return core.isAdminUser(user);
   }
 
+  getBotName() {
+    return core.name;
+  }
+
   removeBotNameFromMessage(message) {
     let messageWithoutBotName = message.text;
 
