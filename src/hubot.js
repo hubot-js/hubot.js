@@ -61,6 +61,10 @@ module.exports = class Hubot {
     return core.getUserById(message.user);
   }
 
+  getUserByName(userName) {
+    return core.getUserByName(userName);
+  }
+
   getRecipient(message) {
     return core.getRecipient(message);
   }
