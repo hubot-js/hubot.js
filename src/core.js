@@ -106,6 +106,10 @@ Core.prototype.isAdminUser = function isAdminUser(user) {
   return db.getDb().get('SELECT * FROM admins WHERE admin = ?', user);
 };
 
+Core.prototype.getChannelByName = function getChannelByName(channelName) {
+  return this.channels.find(channel => channel.name === channelName);
+};
+
 function isFromHubot(message) {
   return message.user === botUser.id;
 }

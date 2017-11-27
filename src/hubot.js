@@ -81,6 +81,10 @@ module.exports = class Hubot {
     return core.name;
   }
 
+  getChannelByName(channelName) {
+    return core.getChannelByName(channelName);
+  }
+
   removeBotNameFromMessage(message) {
     let messageWithoutBotName = message.text;
 
