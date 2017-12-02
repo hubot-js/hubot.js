@@ -105,9 +105,19 @@ Speecher.prototype.separator = function separator(text) {
 };
 
 Speecher.prototype.replace = function replace(key, text) {
-  this.message = this.message.replace(`\${${key}}`, optionalText(text));
+  if (text && text.id && text.name) return this.replaceUser(key, text);
+  this.message = this.message.replace(`[[${key}]]`, optionalText(text));
   return this;
 };
+
+Speecher.prototype.replaceUser = function replaceUser(key, user) {
+  this.message = this.message.replace(`[[${key}]]`, getUserTag(user));
+  return this;
+};
+
+function getUserTag(user) {
+  return ` <@${user.id}|${user.name}> `;
+}
 
 Speecher.prototype.end = function end() {
   if (this.isError) this.append('_');
