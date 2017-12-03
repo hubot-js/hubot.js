@@ -62,6 +62,10 @@ Core.prototype.onMessage = function onMessage(message) {
     return;
   }
 
+  handleMessage(message);
+};
+
+function handleMessage(message) {
   if (isChatMessage(message) && !isFromHubot(message)) {
     message.text = normalizer.normalize(message.text);
 
@@ -72,7 +76,7 @@ Core.prototype.onMessage = function onMessage(message) {
       messageHandler.callTasks(message, this);
     }
   }
-};
+}
 
 Core.prototype.firstRunChecker = function firstRunChecker() {
   db.getDb().get('SELECT * FROM first_use').then((record) => {
