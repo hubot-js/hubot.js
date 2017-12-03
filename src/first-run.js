@@ -21,7 +21,8 @@ function firstRun(core, message) {
 }
 
 function message1(hubot, core, message) {
-  return hubot.speech().hello(core.getUserById(message.user)).append('firstUse.message1', { botName: 'hubot' }).end();
+  return hubot.speech().hello(core.getUserById(message.user))
+    .append('firstUse.message1', { botName: hubot.getBotName() }).end();
 }
 
 function message4(hubot) {

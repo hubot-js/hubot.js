@@ -36,6 +36,9 @@ Core.prototype.run = function run() {
 
   this.on('start', this.onStart);
   this.on('message', this.onMessage);
+  this.on('close', () => {
+    this.connect();
+  });
 };
 
 Core.prototype.onStart = function onStart() {
@@ -54,6 +57,15 @@ Core.prototype.onStart = function onStart() {
 };
 
 Core.prototype.onMessage = function onMessage(message) {
+  if (message.type === 'reconnect_url') {
+    this.wsUrl = message.url;
+    return;
+  }
+
+  handleMessage(message);
+};
+
+function handleMessage(message) {
   if (isChatMessage(message) && !isFromHubot(message)) {
     message.text = normalizer.normalize(message.text);
 
@@ -64,7 +76,7 @@ Core.prototype.onMessage = function onMessage(message) {
       messageHandler.callTasks(message, this);
     }
   }
-};
+}
 
 Core.prototype.firstRunChecker = function firstRunChecker() {
   db.getDb().get('SELECT * FROM first_use').then((record) => {
@@ -104,6 +116,10 @@ Core.prototype.getRecipient = function getRecipient(message) {
 
 Core.prototype.isAdminUser = function isAdminUser(user) {
   return db.getDb().get('SELECT * FROM admins WHERE admin = ?', user);
+};
+
+Core.prototype.getChannelByName = function getChannelByName(channelName) {
+  return this.channels.find(channel => channel.name === channelName);
 };
 
 function isFromHubot(message) {

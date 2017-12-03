@@ -25,7 +25,7 @@ i18n.use(backend)
   .init(initOptions);
 
 function t(key, vars) {
-  if (i18n.exists(key)) {
+  if (isNaN(key) && i18n.exists(key)) {
     return vars ? i18n.t(key, vars) : i18n.t(key);
   }
 

@@ -42,7 +42,7 @@ Speecher.prototype.thanks = function thanks(user) {
 };
 
 Speecher.prototype.user = function user(theUser) {
-  this.append(` <@${theUser.id}|${theUser.name}> `);
+  this.append(` <@${theUser.id}|${theUser.name}>`);
   return this;
 };
 
@@ -100,14 +100,24 @@ Speecher.prototype.paragraph = function paragraph(text) {
 };
 
 Speecher.prototype.separator = function separator(text) {
-  this.append(` - ${optionalText(text)}`);
+  this.append(' - ').append(optionalText(text));
   return this;
 };
 
 Speecher.prototype.replace = function replace(key, text) {
-  this.message = this.message.replace(`\${${key}}`, optionalText(text));
+  if (text && text.id && text.name) return this.replaceUser(key, text);
+  this.message = this.message.replace(`[[${key}]]`, optionalText(text));
   return this;
 };
+
+Speecher.prototype.replaceUser = function replaceUser(key, user) {
+  this.message = this.message.replace(`[[${key}]]`, getUserTag(user));
+  return this;
+};
+
+function getUserTag(user) {
+  return `<@${user.id}|${user.name}>`;
+}
 
 Speecher.prototype.end = function end() {
   if (this.isError) this.append('_');

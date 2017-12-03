@@ -61,6 +61,10 @@ module.exports = class Hubot {
     return core.getUserById(message.user);
   }
 
+  getUserByName(userName) {
+    return core.getUserByName(userName);
+  }
+
   getRecipient(message) {
     return core.getRecipient(message);
   }
@@ -75,6 +79,14 @@ module.exports = class Hubot {
 
   isAdminUser(user) {
     return core.isAdminUser(user);
+  }
+
+  getBotName() {
+    return core.name;
+  }
+
+  getChannelByName(channelName) {
+    return core.getChannelByName(channelName);
   }
 
   removeBotNameFromMessage(message) {
