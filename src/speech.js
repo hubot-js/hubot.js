@@ -116,7 +116,7 @@ Speecher.prototype.replaceUser = function replaceUser(key, user) {
 };
 
 function getUserTag(user) {
-  return ` <@${user.id}|${user.name}> `;
+  return `<@${user.id}|${user.name}>`;
 }
 
 Speecher.prototype.end = function end() {
