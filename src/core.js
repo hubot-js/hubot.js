@@ -62,18 +62,18 @@ Core.prototype.onMessage = function onMessage(message) {
     return;
   }
 
-  handleMessage(message);
+  handleMessage(message, this);
 };
 
-function handleMessage(message) {
+function handleMessage(message, hubot) {
   if (isChatMessage(message) && !isFromHubot(message)) {
     message.text = normalizer.normalize(message.text);
 
-    if (isFirstInteraction(this, message)) {
+    if (isFirstInteraction(hubot, message)) {
       isFirstRun = false;
-      firstRun.firstRun(this, message);
+      firstRun.firstRun(hubot, message);
     } else {
-      messageHandler.callTasks(message, this);
+      messageHandler.callTasks(message, hubot);
     }
   }
 }
