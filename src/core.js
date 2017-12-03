@@ -36,6 +36,9 @@ Core.prototype.run = function run() {
 
   this.on('start', this.onStart);
   this.on('message', this.onMessage);
+  this.on('close', () => {
+    this.connect();
+  });
 };
 
 Core.prototype.onStart = function onStart() {
@@ -54,6 +57,11 @@ Core.prototype.onStart = function onStart() {
 };
 
 Core.prototype.onMessage = function onMessage(message) {
+  if (message.type === 'reconnect_url') {
+    this.wsUrl = message.url;
+    return;
+  }
+
   if (isChatMessage(message) && !isFromHubot(message)) {
     message.text = normalizer.normalize(message.text);
 
