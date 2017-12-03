@@ -42,7 +42,7 @@ Speecher.prototype.thanks = function thanks(user) {
 };
 
 Speecher.prototype.user = function user(theUser) {
-  this.append(` <@${theUser.id}|${theUser.name}> `);
+  this.append(` <@${theUser.id}|${theUser.name}>`);
   return this;
 };
 
@@ -100,7 +100,7 @@ Speecher.prototype.paragraph = function paragraph(text) {
 };
 
 Speecher.prototype.separator = function separator(text) {
-  this.append(` - ${optionalText(text)}`);
+  this.append(' - ').append(optionalText(text));
   return this;
 };
 
