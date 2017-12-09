@@ -41,7 +41,7 @@
     "fs-extra": "^4.0.2",
     "gear-help": "^2.1.0",
     "gear-jenkins": "^2.1.1",
-    "gear-code-review": "^1.0.0"
+    "gear-code-review": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
