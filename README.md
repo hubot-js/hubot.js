@@ -105,6 +105,17 @@ hubot start job my-deploy
 
 ![start-job](media/start-job.png)
 
+
+### Code Review
+
+I know how to ask for code review.
+
+```
+code review
+```
+
+![code-review](media/ask-for-review.gif)
+
 ### Help
 
 If you have doubt about the available commands, please ask me for help. I'll be glad to use my gears and knowledge to answer your questions.
