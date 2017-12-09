@@ -1,5 +1,5 @@
 # hubot.js 
-[![Build Status](https://travis-ci.org/hubot-js/hubot.js.svg?branch=master)](https://travis-ci.org/hubot-js/hubot.js)   [![npm](https://img.shields.io/npm/v/hubot.js.svg)](https://www.npmjs.com/package/hubot.js)   [![Coverage Status](https://coveralls.io/repos/github/hubot-js/hubot.js/badge.svg?branch=master)](https://coveralls.io/github/hubot-js/hubot.js?branch=master)   [![Code Climate](https://img.shields.io/codeclimate/github/hubot-js/hubot.js.svg)](https://codeclimate.com/github/hubot-js/hubot.js)  [![dependencies-badge](https://david-dm.org/hubot-js/hubot.js.svg)](https://david-dm.org/hubot-js/hubot.js)  [![devDependencies Status](https://david-dm.org/hubot-js/hubot.js/dev-status.svg)](https://david-dm.org/hubot-js/hubot.js?type=dev)  [![Docker Stars](https://img.shields.io/docker/stars/robsonbittencourt/hubot.js.svg)](https://hub.docker.com/r/robsonbittencourt/hubot.js/)  [![Docker Pulls](https://img.shields.io/docker/pulls/robsonbittencourt/hubot.js.svg)](https://hub.docker.com/r/robsonbittencourt/hubot.js/)  [![image-size](https://images.microbadger.com/badges/image/robsonbittencourt/hubot.js.svg)](http://microbadger.com/images/robsonbittencourt/hubot.js)
+[![Build Status](https://travis-ci.org/hubot-js/hubot.js.svg?branch=master)](https://travis-ci.org/hubot-js/hubot.js)   [![npm](https://img.shields.io/npm/v/hubot.js.svg)](https://www.npmjs.com/package/hubot.js)   [![Coverage Status](https://coveralls.io/repos/github/hubot-js/hubot.js/badge.svg?branch=master)](https://coveralls.io/github/hubot-js/hubot.js?branch=master)   [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)  [![dependencies-badge](https://david-dm.org/hubot-js/hubot.js.svg)](https://david-dm.org/hubot-js/hubot.js)  [![devDependencies Status](https://david-dm.org/hubot-js/hubot.js/dev-status.svg)](https://david-dm.org/hubot-js/hubot.js?type=dev)  [![Docker Stars](https://img.shields.io/docker/stars/robsonbittencourt/hubot.js.svg)](https://hub.docker.com/r/robsonbittencourt/hubot.js/)  [![Docker Pulls](https://img.shields.io/docker/pulls/robsonbittencourt/hubot.js.svg)](https://hub.docker.com/r/robsonbittencourt/hubot.js/)  [![image-size](https://images.microbadger.com/badges/image/robsonbittencourt/hubot.js.svg)](http://microbadger.com/images/robsonbittencourt/hubot.js)
 
 > A small robot written in Javascript (He doesn't like coffeescript)
 
@@ -28,7 +28,7 @@ To enable me with Docker it's a piece of cake. I have a recipe of how to build m
 ```bash
 docker run -d -e BOT_API_TOKEN=bot_token \
               -e BOT_NAME=bot_name \
-              -v ~/hubot.js/data:/home/hubot.js/data \
+              -v ~/hubot.js/data:/home/node/hubot.js/data \
               --name=hubot \
               robsonbittencourt/hubot.js
 ```
@@ -104,6 +104,17 @@ hubot start job my-deploy
 ```
 
 ![start-job](media/start-job.png)
+
+
+### Code Review
+
+I know how to ask for code review.
+
+```
+code review
+```
+
+![code-review](media/ask-for-review.gif)
 
 ### Help
 
