@@ -36,9 +36,6 @@ Core.prototype.run = function run() {
 
   this.on('start', this.onStart);
   this.on('message', this.onMessage);
-  this.on('close', () => {
-    this.connect();
-  });
 };
 
 Core.prototype.onStart = function onStart() {
@@ -54,14 +51,21 @@ Core.prototype.onStart = function onStart() {
 
   this.firstRunChecker();
   this.setLanguage();
+
+  startHubotStatusMonitor(this);
 };
 
-Core.prototype.onMessage = function onMessage(message) {
-  if (message.type === 'reconnect_url') {
-    this.wsUrl = message.url;
-    return;
-  }
+function startHubotStatusMonitor(core) {
+  setInterval(() => {
+    core._api('users.getPresence').then((hubot) => {
+      if (!hubot.online) {
+        process.exit();
+      }
+    });
+  }, 30000);
+}
 
+Core.prototype.onMessage = function onMessage(message) {
   handleMessage(message, this);
 };
 
