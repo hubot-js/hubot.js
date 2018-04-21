@@ -29,7 +29,7 @@
   "homepage": "https://github.com/hubot-js/hubot.js#readme",
   "dependencies": {
     "slackbots": "^0.5.3",
-    "string": "^3.3.3",
+    "voca": "^1.4.0",
     "winston": "^2.4.0",
     "q": "^2.0.3",
     "sqlite": "^2.8.0",
