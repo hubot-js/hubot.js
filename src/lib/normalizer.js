@@ -1,9 +1,13 @@
 'use strict';
 
-const stringfy = require('string');
+const voca = require('voca');
 
 exports.normalize = normalize;
 
 function normalize(text) {
-  return stringfy(text).trim().latinise().s.toLowerCase();
+  return voca(text)
+    .trim()
+    .latinise()
+    .lowerCase()
+    .value();
 }
