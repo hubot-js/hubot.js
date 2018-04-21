@@ -28,27 +28,27 @@
   },
   "homepage": "https://github.com/hubot-js/hubot.js#readme",
   "dependencies": {
-    "slackbots": "^0.5.3",
-    "voca": "^1.4.0",
-    "winston": "^2.4.0",
-    "q": "^2.0.3",
-    "sqlite": "^2.8.0",
-    "pm2": "^2.4.6",
-    "dialog": "^0.3.1",
-    "yargs": "^9.0.1",
-    "i18next": "^10.0.1",
-    "i18next-sync-fs-backend": "^1.0.0",
-    "fs-extra": "^4.0.2",
-    "gear-help": "^2.1.0",
-    "gear-jenkins": "^3.0.0",
-    "gear-code-review": "^1.2.0"
+    "slackbots": "0.5.3",
+    "voca": "1.4.0",
+    "winston": "2.4.0",
+    "q": "2.0.3",
+    "sqlite": "2.8.0",
+    "pm2": "2.4.6",
+    "dialog": "0.3.1",
+    "yargs": "9.0.1",
+    "i18next": "10.0.1",
+    "i18next-sync-fs-backend": "1.0.0",
+    "fs-extra": "4.0.2",
+    "gear-help": "2.1.0",
+    "gear-jenkins": "3.0.0",
+    "gear-code-review": "1.2.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "coveralls": "^3.0.0",
-    "eslint": "^4.9.0",
-    "eslint-config-hubot-js": "^1.0.4",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.1"
+    "chai": "4.1.2",
+    "coveralls": "3.0.0",
+    "eslint": "4.9.0",
+    "eslint-config-hubot-js": "1.0.4",
+    "istanbul": "0.4.5",
+    "mocha": "4.0.1"
   }
 }
