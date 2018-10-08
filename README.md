@@ -29,6 +29,7 @@ To enable me with Docker it's a piece of cake. I have a recipe of how to build m
 docker run -d -e BOT_API_TOKEN=bot_token \
               -e BOT_NAME=bot_name \
               -v ~/hubot.js/data:/home/node/hubot.js/data \
+              -v /var/run/docker.sock:/var/run/docker.sock \
               --restart="unless-stopped" \
               --name=hubot \
               robsonbittencourt/hubot.js
