@@ -1,6 +1,6 @@
 {
   "name": "hubot.js",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "description": "A small robot written in Javascript (He does not like coffeescript)",
   "main": "index.js",
   "bin": {
@@ -42,7 +42,7 @@
     "gear-help": "2.1.0",
     "gear-jenkins": "3.0.0",
     "gear-code-review": "1.2.1",
-    "gear-docker": "1.0.0"
+    "gear-docker": "1.1.0"
   },
   "devDependencies": {
     "chai": "4.1.2",

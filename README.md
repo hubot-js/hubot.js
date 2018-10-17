@@ -30,6 +30,7 @@ docker run -d -e BOT_API_TOKEN=bot_token \
               -e BOT_NAME=bot_name \
               -v ~/hubot.js/data:/home/node/hubot.js/data \
               -v /var/run/docker.sock:/var/run/docker.sock \
+              --group-add=$(stat -c %g /var/run/docker.sock) \
               --restart="unless-stopped" \
               --name=hubot \
               robsonbittencourt/hubot.js
@@ -93,13 +94,7 @@ For now, I don't know how to do many things. But I'm able to understand and to u
 
 ### Jenkins
 
-I know how to invoke your jobs in Jenkins. For this, you need to do the setup before.
-
-```
-configure jenkins
-```
-
-After that, you can ask me to do your jobs.
+I know how to invoke your jobs in Jenkins.
 
 ```
 hubot start job my-deploy
@@ -107,6 +102,19 @@ hubot start job my-deploy
 
 ![start-job](media/start-job.png)
 
+More details [here](https://github.com/hubot-js/gear-jenkins).
+
+### Docker
+
+I know how to manipulate your Docker containers. 
+
+```
+restart containerName
+```
+
+![restart-operation](media/restart-operation.gif)
+
+More details [here](https://github.com/hubot-js/gear-docker).
 
 ### Code Review
 
@@ -117,6 +125,8 @@ code review
 ```
 
 ![code-review](media/ask-for-review.gif)
+
+More details [here](https://github.com/hubot-js/gear-code-review).
 
 ### Help
 

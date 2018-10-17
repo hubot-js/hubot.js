@@ -4,7 +4,7 @@ RUN apk add --update bash curl && rm -rf /var/cache/apk/*
 
 ARG version
 
-RUN chown -R node /usr/local && addgroup node ping
+RUN chown -R node /usr/local
 
 USER node
 
